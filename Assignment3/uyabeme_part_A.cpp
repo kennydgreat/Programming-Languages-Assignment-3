@@ -16,6 +16,7 @@ class person {
 	long social_insurance_number;
 	//constructor and non member functions
 public: 
+	person();
 	person(char * name, long social_insurance_number);
 	~person();
 	void set_name(char * name);
@@ -25,23 +26,42 @@ public:
 	void print();
 };
 
-
+/*This class is derived from Person
+	it has a double "rate" memeber and a double "hours" members*/
+class HourlyEmployee : public person {
+	double rate;
+	double hours;
+public:
+	void set_rate(double rate);
+	double get_rate();
+	void set_hours(double hours);
+	double get_hours();
+};
 
 
 
 int main()
 {
-	person person1("Ted", 5);
-	person1.print();
-	char * name = person1.get_name();
-	char * name1;
-	//person1.set_name(name);
-	//name1 = person1.get_name();
-//	cout << name1 << "\n";
+//person person1("Ted", 5);
+//	person1.print();
+//	char * name = person1.get_name();
+//	char * name1;
+//	//person1.set_name(name);
+//	//name1 = person1.get_name();
+////	cout << name1 << "\n";
+
+	HourlyEmployee emp;
+	emp.set_hours(5);
+	cout << emp.get_hours() << "\n";
+	emp.set_rate(3);
+	cout << emp.get_rate() << "\n";
+
+
 
     return 0;
 }
 
+person::person() {}
 /*This constructor takes a string name and a long SIN then
 1) finds out the number of characters in the name parameter
 2) allocates that much space and set name memeber to point it
@@ -95,4 +115,27 @@ void person::set_social_insurance_number(long social_insurance_number) {
 	this->social_insurance_number = social_insurance_number;
 }
 
+//-------------------------------------------------------------------------------------
+// HourlyEmlpoyee nonmember functions
 
+
+/*This method 
+1) set the "rate" memebr of a HourlyEmployee object to the rate parameter.*/
+void HourlyEmployee::set_rate(double rate) {
+	this->rate = rate;
+}
+/*This method 
+1) returns the "rate" memeber of a HourEmployee object*/
+double HourlyEmployee::get_rate() {
+	return this->rate;
+}
+/*This method
+1) Sets the "hours" memebr of a HourlEmployee object to the hours parameter*/
+void HourlyEmployee::set_hours(double hours) {
+	this->hours = hours;
+}
+/*This function
+1) returns the "hours" memeber of a HourlyEmployee object*/
+double HourlyEmployee::get_hours() {
+	return this->hours;
+}
