@@ -1,8 +1,10 @@
 // Assignment3.cpp : Defines the entry point for the console application.
 /*Program description: */
 
+#define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include <iostream>
+
 using namespace std;
 
 /*person is the base class with the private members
@@ -15,11 +17,14 @@ class person {
 	//constructor and non member functions
 public: 
 	person(char * name, long social_insurance_number);
+	~person();
 	void set_name(char * name);
 	char * get_name();
 	void set_social_insurance_number(long social_insurance_number);
 	long get_social_insurance_number();
+	void print();
 };
+
 
 
 
@@ -27,11 +32,67 @@ public:
 int main()
 {
 	person person1("Ted", 5);
+	person1.print();
+	char * name = person1.get_name();
+	char * name1;
+	//person1.set_name(name);
+	//name1 = person1.get_name();
+//	cout << name1 << "\n";
 
     return 0;
 }
 
+/*This constructor takes a string name and a long SIN then
+1) finds out the number of characters in the name parameter
+2) allocates that much space and set name memeber to point it
+3) sets the "social_insurance_number" memeber to the SIN parameter*/
 person::person(char * name, long social_insurance_number) {
-	this->name = name;
+	size_t num_of_char = strlen(name);
+	this->name = new char[num_of_char + 1];
+	if (!name) {
+		cout << "name memory allocation failed!\n";
+		exit(1);
+	}
+	strcpy(this->name, name);
+
 	this->social_insurance_number = social_insurance_number;
 }
+
+/*THis is the decontructor of the Perosn class it
+1) free the block of memory that the "name" memeber points
+   allocated when "set_name" is called*/
+person::~person() {
+	delete name;
+	cout << "The deconstructor is called: name has been deleted.\n";
+}
+
+/*This method
+1) finds out the number of characters in the name parameter
+2) allocates that much space and set name memeber to point it
+3) copies the name parameter into the newly allocated space*/
+void person::set_name(char * name) {
+	size_t num_of_char = strlen(name);
+	this->name = new char[num_of_char+1];
+	if (!name) {
+		cout << "name memory allocation failed!\n";
+			exit(1);
+	}
+	strcpy(this->name, name);
+}
+
+/*This method 
+1) returns the name member of the Person object*/
+char * person::get_name() {
+	return name;
+}
+/*This method
+1) Prints out all instance variables of a person object*/
+void person::print() {
+	cout << "Name: " << name << ", SIN: " << social_insurance_number;
+}
+
+void person::set_social_insurance_number(long social_insurance_number) {
+	this->social_insurance_number = social_insurance_number;
+}
+
+
