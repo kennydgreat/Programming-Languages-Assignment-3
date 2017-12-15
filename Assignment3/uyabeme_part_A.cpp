@@ -36,6 +36,7 @@ public:
 	double get_rate();
 	void set_hours(double hours);
 	double get_hours();
+	double weekly_pay();
 };
 
 class SalariedEmployee : public person {
@@ -43,6 +44,7 @@ class SalariedEmployee : public person {
 public:
 	void set_salary(double salary);
 	double get_salary();
+	double weekly_pay();
 };
 
 
@@ -59,16 +61,16 @@ int main()
 //	//name1 = person1.get_name();
 ////	cout << name1 << "\n";
 
-	/*HourlyEmployee emp;
-	emp.set_hours(5);
-	cout << emp.get_hours() << "\n";
-	emp.set_rate(3);
-	cout << emp.get_rate() << "\n";
-*/
-
-	SalariedEmployee emp;
-	emp.set_salary(3);
-	cout << emp.get_salary();
+	HourlyEmployee emp1;
+	emp1.set_hours(5);
+	cout << "emp1's hours is " << emp1.get_hours() << " \n";
+	emp1.set_rate(3);
+	cout <<"emp1's rate is "<<  emp1.get_rate() << " \n";
+	SalariedEmployee emp2;
+	emp2.set_salary(3);
+	cout << "emp2's salary is " <<emp2.get_salary() << " \n";
+	cout << "emp1's weekly pay is " << emp1.weekly_pay()<< " \n"; 
+	cout << "emp2's weekly pay is " << emp2.weekly_pay() << " \n";
     return 0;
 }
 
@@ -157,8 +159,11 @@ void HourlyEmployee::set_hours(double hours) {
 double HourlyEmployee::get_hours() {
 	return this->hours;
 }
-
-
+/*This is the HourlsEmployee object's version of the "weekly_pay" function. it
+1) returns the "hours" member multiplied by the "rate " member of the object*/
+double HourlyEmployee::weekly_pay() {
+	return hours*rate;
+}
 //-----------------------------------------------------------------
 // SalariedEmployee memeber functions
 
@@ -173,4 +178,10 @@ void SalariedEmployee::set_salary(double salary) {
 
 double SalariedEmployee::get_salary() {
 	return salary;
+}
+
+/*This is the SalariedEmployee object's version of the "weekly_pay" function. it
+1) returns the "salary" member divided by 52 */
+double SalariedEmployee::weekly_pay() {
+	return salary/52 ;
 }
