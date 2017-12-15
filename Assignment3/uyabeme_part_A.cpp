@@ -38,6 +38,15 @@ public:
 	double get_hours();
 };
 
+class SalariedEmployee : public person {
+	double salary;
+public:
+	void set_salary(double salary);
+	double get_salary();
+};
+
+
+
 
 
 int main()
@@ -50,16 +59,19 @@ int main()
 //	//name1 = person1.get_name();
 ////	cout << name1 << "\n";
 
-	HourlyEmployee emp;
+	/*HourlyEmployee emp;
 	emp.set_hours(5);
 	cout << emp.get_hours() << "\n";
 	emp.set_rate(3);
 	cout << emp.get_rate() << "\n";
+*/
 
-
-
+	SalariedEmployee emp;
+	emp.set_salary(3);
+	cout << emp.get_salary();
     return 0;
 }
+
 
 person::person() {}
 /*This constructor takes a string name and a long SIN then
@@ -114,7 +126,13 @@ void person::print() {
 void person::set_social_insurance_number(long social_insurance_number) {
 	this->social_insurance_number = social_insurance_number;
 }
-
+/*
+	This method 
+	1) gets the "social_insurance_number" member of a Person object
+*/
+long person::get_social_insurance_number() {
+	return social_insurance_number;
+}
 //-------------------------------------------------------------------------------------
 // HourlyEmlpoyee nonmember functions
 
@@ -138,4 +156,21 @@ void HourlyEmployee::set_hours(double hours) {
 1) returns the "hours" memeber of a HourlyEmployee object*/
 double HourlyEmployee::get_hours() {
 	return this->hours;
+}
+
+
+//-----------------------------------------------------------------
+// SalariedEmployee memeber functions
+
+/*this method 
+1) Sets the "salary" memebr of a SalariedEmployee object to the salary parameter*/
+void SalariedEmployee::set_salary(double salary) {
+	this->salary = salary;
+}
+/*This function
+1) returns the "salary" memebr of the SalariedEmployee object
+*/
+
+double SalariedEmployee::get_salary() {
+	return salary;
 }
