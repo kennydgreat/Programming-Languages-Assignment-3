@@ -38,7 +38,7 @@ public:
 	double get_rate();
 	virtual void set_hours(double hours);
 	double get_hours();
-	double weekly_pay();
+	virtual double weekly_pay();
 protected:
 	double hours;
 };
@@ -57,6 +57,7 @@ public:
 class HybridEmployee : public HourlyEmployee, public SalariedEmployee {
 public : 
 	void set_hours(double hours);
+	double weekly_pay();
 };
 
 
@@ -81,6 +82,7 @@ int main()
 	emp1.set_hours(5);
 	emp4 = &emp3;
 	emp4->set_hours(45);
+	// emp3 hours is now 5
 	cout << "emp1's hours is " << emp1.get_hours() << " \n";
 	cout << "emp3's hours is " << emp3.get_hours() << " \n";
 	cout << "emp4's hours is " << emp4->get_hours() << " \n";
@@ -88,9 +90,14 @@ int main()
 	cout <<"emp1's rate is "<<  emp1.get_rate() << " \n";
 	SalariedEmployee emp2;
 	emp2.set_salary(3);
+	emp3.set_rate(2);
+	emp3.set_salary(52);
+	//rate is 2
 	cout << "emp2's salary is " <<emp2.get_salary() << " \n";
 	cout << "emp1's weekly pay is " << emp1.weekly_pay()<< " \n"; 
 	cout << "emp2's weekly pay is " << emp2.weekly_pay() << " \n";
+	cout << "emp3's weekly pay is " << emp3.weekly_pay() << " \n";
+	//weekly_pay should be 52/52 + 5*2
     return 0;
 }
 
@@ -216,4 +223,11 @@ double SalariedEmployee::weekly_pay() {
 void HybridEmployee::set_hours(double hours) {
 	if (hours > 40) this->hours = hours - 40;
 	else this->hours = 0;
+}
+/*This method 
+1)calculates the weekly_pay of a HybridEmployee by calling weekly_pay() methods 
+both base classes (HourlyEmployee and SalariedEmployee) and adds the results
+*/
+double HybridEmployee::weekly_pay() {
+	return this->HourlyEmployee::weekly_pay() + this->SalariedEmployee::weekly_pay();
 }
