@@ -31,7 +31,7 @@ public:
 
 /*This class is derived from Person
 	it has a double "rate" memeber and a double "hours" members*/
-class HourlyEmployee : public person {
+class HourlyEmployee : virtual public person {
 	double rate;
 public:
 	void set_rate(double rate);
@@ -43,7 +43,7 @@ protected:
 	double hours;
 };
 
-class SalariedEmployee : public person {
+class SalariedEmployee : virtual public person {
 	double salary;
 public:
 	void set_salary(double salary);
@@ -66,17 +66,20 @@ public :
 
 int main()
 {
-//person person1("Ted", 5);
+	person person1("Ted", 5);
 //	person1.print();
-//	char * name = person1.get_name();
-//	char * name1;
-//	//person1.set_name(name);
-//	//name1 = person1.get_name();
-////	cout << name1 << "\n";
+	char * name = "Kolo";
+	person1.set_name(name);
+	person1.print();
 
 	HourlyEmployee emp1;
+	SalariedEmployee emp2;
 	HybridEmployee emp3;
-	HourlyEmployee * emp4;
+	HourlyEmployee * emp4 = &emp3;
+	emp1.print();
+	emp2.print();
+	emp3.print();
+	emp4->print();
 	emp3.set_hours(9);
 	cout << "emp3's hours before changed by pointer is " << emp3.get_hours() << " \n";
 	emp1.set_hours(5);
@@ -88,7 +91,6 @@ int main()
 	cout << "emp4's hours is " << emp4->get_hours() << " \n";
 	emp1.set_rate(3);
 	cout <<"emp1's rate is "<<  emp1.get_rate() << " \n";
-	SalariedEmployee emp2;
 	emp2.set_salary(3);
 	emp3.set_rate(2);
 	emp3.set_salary(52);
@@ -103,20 +105,18 @@ int main()
 
 //-------------------------------------------------------------------------------
 //Person nonmember functions
-person::person() {}
+/*This default constructor of the Person class
+1) sets the "name" memeber to "NOT GIVEN" using the set_name method
+2) sets the SIN number to 0*/
+person::person() {
+	this->set_name("NOT GIVEN");
+	this->set_social_insurance_number(0); 
+}
 /*This constructor takes a string name and a long SIN then
-1) finds out the number of characters in the name parameter
-2) allocates that much space and set name memeber to point it
+1)Sets the "name" memeber to the name parameter using the set_name() method
 3) sets the "social_insurance_number" memeber to the SIN parameter*/
 person::person(char * name, long social_insurance_number) {
-	size_t num_of_char = strlen(name);
-	this->name = new char[num_of_char + 1];
-	if (!name) {
-		cout << "name memory allocation failed!\n";
-		exit(1);
-	}
-	strcpy(this->name, name);
-
+	this->set_name(name);
 	this->social_insurance_number = social_insurance_number;
 }
 
@@ -150,7 +150,7 @@ char * person::get_name() {
 /*This method
 1) Prints out all instance variables of a person object*/
 void person::print() {
-	cout << "Name: " << name << ", SIN: " << social_insurance_number;
+	cout << "Name: " << name << ", SIN: " << social_insurance_number << " \n";
 }
 
 void person::set_social_insurance_number(long social_insurance_number) {
