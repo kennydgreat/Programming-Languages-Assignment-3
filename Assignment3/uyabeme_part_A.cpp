@@ -6,6 +6,9 @@
 #include <iostream>
 
 using namespace std;
+//----------------------------------------------------------------------------------
+//Classes 
+
 
 /*person is the base class with the private members
 	1) name: name of the person(a pointer to a char)
@@ -30,13 +33,14 @@ public:
 	it has a double "rate" memeber and a double "hours" members*/
 class HourlyEmployee : public person {
 	double rate;
-	double hours;
 public:
 	void set_rate(double rate);
 	double get_rate();
-	void set_hours(double hours);
+	virtual void set_hours(double hours);
 	double get_hours();
 	double weekly_pay();
+protected:
+	double hours;
 };
 
 class SalariedEmployee : public person {
@@ -46,10 +50,18 @@ public:
 	double get_salary();
 	double weekly_pay();
 };
+/*This class inherts from the "HourlyEmployee" and "SalariedEmployee" class
+	It has it's very own "set_hours" also has a weeklyPay() method that calls the weeklyPay() 
+	methods from each Base class and adds the results*/
+
+class HybridEmployee : public HourlyEmployee, public SalariedEmployee {
+public : 
+	void set_hours(double hours);
+};
 
 
-
-
+//--------------------------------------------------------------------------------------
+// Main Function
 
 int main()
 {
@@ -62,8 +74,16 @@ int main()
 ////	cout << name1 << "\n";
 
 	HourlyEmployee emp1;
+	HybridEmployee emp3;
+	HourlyEmployee * emp4;
+	emp3.set_hours(9);
+	cout << "emp3's hours before changed by pointer is " << emp3.get_hours() << " \n";
 	emp1.set_hours(5);
+	emp4 = &emp3;
+	emp4->set_hours(45);
 	cout << "emp1's hours is " << emp1.get_hours() << " \n";
+	cout << "emp3's hours is " << emp3.get_hours() << " \n";
+	cout << "emp4's hours is " << emp4->get_hours() << " \n";
 	emp1.set_rate(3);
 	cout <<"emp1's rate is "<<  emp1.get_rate() << " \n";
 	SalariedEmployee emp2;
@@ -74,7 +94,8 @@ int main()
     return 0;
 }
 
-
+//-------------------------------------------------------------------------------
+//Person nonmember functions
 person::person() {}
 /*This constructor takes a string name and a long SIN then
 1) finds out the number of characters in the name parameter
@@ -184,4 +205,15 @@ double SalariedEmployee::get_salary() {
 1) returns the "salary" member divided by 52 */
 double SalariedEmployee::weekly_pay() {
 	return salary/52 ;
+}
+//----------------------------------------------------------------------------------
+// HybridEmployee member functions
+
+/*This method
+1) Sets the "hours" memeber from the HybridEmployee's base class (HourlyEmployee) to 
+	the number of hours passed 40 from the hours parameter and 0 if the paramter is less 
+	than 40*/
+void HybridEmployee::set_hours(double hours) {
+	if (hours > 40) this->hours = hours - 40;
+	else this->hours = 0;
 }
