@@ -4,7 +4,10 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "stdafx.h"
 #include <iostream>
-
+#define NUM_OF_WEEKS_IN_YEAR 52
+#define ONE 1
+#define NUMBER_OF_WORK_HOURS_IN_WEEK 40
+#define ZERO 0
 using namespace std;
 //----------------------------------------------------------------------------------
 //Classes 
@@ -17,7 +20,7 @@ using namespace std;
 class person {
 	char * name;
 	long social_insurance_number;
-	//constructor and non member functions
+	//constructors and non member functions
 public: 
 	person();
 	person(char * name, long social_insurance_number);
@@ -43,6 +46,8 @@ protected:
 	double hours;
 };
 
+/*This class is derived from Person
+it has a double "salary" memeber*/
 class SalariedEmployee : virtual public person {
 	double salary;
 public:
@@ -66,8 +71,7 @@ public :
 
 int main()
 {
-	person person1("Ted", 5);
-//	person1.print();
+	person person1("Ted", ZERO);
 	char * name = "Kolo";
 	person1.set_name(name);
 	person1.print();
@@ -110,7 +114,7 @@ int main()
 2) sets the SIN number to 0*/
 person::person() {
 	this->set_name("NOT GIVEN");
-	this->set_social_insurance_number(0); 
+	this->set_social_insurance_number(ZERO); 
 }
 /*This constructor takes a string name and a long SIN then
 1)Sets the "name" memeber to the name parameter using the set_name() method
@@ -121,7 +125,7 @@ person::person(char * name, long social_insurance_number) {
 }
 
 /*THis is the decontructor of the Perosn class it
-1) free the block of memory that the "name" memeber points
+1) frees the block of memory that the "name" memeber points to  which was
    allocated when "set_name" is called*/
 person::~person() {
 	delete name;
@@ -130,7 +134,7 @@ person::~person() {
 
 /*This method
 1) finds out the number of characters in the name parameter
-2) allocates that much space and set name memeber to point it
+2) allocates that much space and set the name memeber to point it
 3) copies the name parameter into the newly allocated space*/
 void person::set_name(char * name) {
 	size_t num_of_char = strlen(name);
@@ -152,7 +156,8 @@ char * person::get_name() {
 void person::print() {
 	cout << "Name: " << name << ", SIN: " << social_insurance_number << " \n";
 }
-
+/*This method 
+1) sets the"social_insurance_number" member to a person object to the SIN parameter */
 void person::set_social_insurance_number(long social_insurance_number) {
 	this->social_insurance_number = social_insurance_number;
 }
@@ -211,7 +216,7 @@ double SalariedEmployee::get_salary() {
 /*This is the SalariedEmployee object's version of the "weekly_pay" function. it
 1) returns the "salary" member divided by 52 */
 double SalariedEmployee::weekly_pay() {
-	return salary/52 ;
+	return salary/NUM_OF_WEEKS_IN_YEAR ;
 }
 //----------------------------------------------------------------------------------
 // HybridEmployee member functions
@@ -221,8 +226,8 @@ double SalariedEmployee::weekly_pay() {
 	the number of hours passed 40 from the hours parameter and 0 if the paramter is less 
 	than 40*/
 void HybridEmployee::set_hours(double hours) {
-	if (hours > 40) this->hours = hours - 40;
-	else this->hours = 0;
+	if (hours > NUMBER_OF_WORK_HOURS_IN_WEEK) this->hours = hours - NUMBER_OF_WORK_HOURS_IN_WEEK;
+	else this->hours = ZERO;
 }
 /*This method 
 1)calculates the weekly_pay of a HybridEmployee by calling weekly_pay() methods 
