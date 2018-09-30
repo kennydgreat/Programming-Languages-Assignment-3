@@ -84,26 +84,29 @@ int main()
 	emp2.print();
 	emp3.print();
 	emp4->print();
-	emp3.set_hours(9);
+
+	emp3.set_hours(40);
+
 	cout << "emp3's hours before changed by pointer is " << emp3.get_hours() << " \n";
 	emp1.set_hours(5);
 	emp4 = &emp3;
 	emp4->set_hours(45);
-	// emp3 hours is now 5
+	// emp3 hours is now 45
 	cout << "emp1's hours is " << emp1.get_hours() << " \n";
 	cout << "emp3's hours is " << emp3.get_hours() << " \n";
 	cout << "emp4's hours is " << emp4->get_hours() << " \n";
 	emp1.set_rate(3);
 	cout <<"emp1's rate is "<<  emp1.get_rate() << " \n";
-	emp2.set_salary(3);
-	emp3.set_rate(2);
-	emp3.set_salary(52);
+	emp2.set_salary(30000);
+	emp3.set_rate(11);
+	emp3.set_salary(52000);
 	//rate is 2
 	cout << "emp2's salary is " <<emp2.get_salary() << " \n";
 	cout << "emp1's weekly pay is " << emp1.weekly_pay()<< " \n"; 
 	cout << "emp2's weekly pay is " << emp2.weekly_pay() << " \n";
+
 	cout << "emp3's weekly pay is " << emp3.weekly_pay() << " \n";
-	//weekly_pay should be 52/52 + 5*2
+	//weekly_pay should be 52000/52 + 11*(45-40)
     return 0;
 }
 
